@@ -1,0 +1,14 @@
+{
+  "name": "messenger-mike",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "nf start",
+    "setup": "nf -j setup start"
+  },
+  "author": "Mickael RAMAROSON",
+  "license": "ISC",
+  "dependencies": {
+    "foreman": "^3.0.1"
+  }
+}
