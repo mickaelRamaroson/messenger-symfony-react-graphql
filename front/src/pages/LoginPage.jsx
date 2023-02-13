@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../store/slice/authSlice";
+import { authActions, login } from "../store/slice/authSlice";
 
 const Loginpage = () => {
   const { loading, error } = useSelector((state) => state.auth);
@@ -22,6 +23,9 @@ const Loginpage = () => {
       navigate("/");
     }
   };
+  useEffect(() => {
+    dispatch(authActions.setError(null));
+  }, []);
 
   return (
     <div className="auth-page">

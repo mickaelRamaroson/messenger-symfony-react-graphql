@@ -3,6 +3,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
 import authReducer from "./slice/authSlice";
+import userReducer from "./slice/userSlice";
 
 export const persistConfigAuth = {
   key: "auth",
@@ -11,4 +12,5 @@ export const persistConfigAuth = {
 
 export const combinedReducer = combineReducers({
   auth: persistReducer(persistConfigAuth, authReducer),
+  user: userReducer,
 });

@@ -81,7 +81,9 @@ export const login = createAsyncThunk("login", async (user, { dispatch }) => {
     const error = errors.find(
       ({ message }) => message === "Authentication Error"
     );
-    dispatch(authActions.setError("Authentication Error"));
+    if (error) {
+      dispatch(authActions.setError("Authentication Error"));
+    }
   }
   dispatch(authActions.setLoading(null));
   return null;
