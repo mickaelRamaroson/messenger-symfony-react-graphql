@@ -1,13 +1,6 @@
 <?php
 
-/**
- * Date: 31.10.16
- *
- * @author Portey Vasil <portey@gmail.com>
- */
-
 namespace App\GraphQL\Type;
-
 
 use Youshido\GraphQL\Config\Object\ObjectTypeConfig;
 use Youshido\GraphQL\Type\NonNullType;
@@ -15,9 +8,8 @@ use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use Youshido\GraphQL\Type\Scalar\IdType;
 use Youshido\GraphQL\Type\Scalar\StringType;
 
-class TodoType extends AbstractObjectType
+class UserRegisterResponseType extends AbstractObjectType
 {
-
     /**
      * @param ObjectTypeConfig $config
      *
@@ -26,8 +18,11 @@ class TodoType extends AbstractObjectType
     public function build($config)
     {
         $config->addFields([
-            'id'        => new NonNullType(new IdType()),
-            'title'     => new StringType(),
+            'id' => new NonNullType(new IdType()),
+            'lastname' => new StringType(),
+            'firstname' => new StringType(),
+            'email' => new StringType(),
+            'token' => new StringType(),
         ]);
     }
 }

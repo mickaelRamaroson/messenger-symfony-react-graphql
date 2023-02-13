@@ -1,14 +1,8 @@
 <?php
-
-/**
- * Date: 31.10.16
- *
- * @author Portey Vasil <portey@gmail.com>
- */
-
 namespace App\GraphQL\Mutation;
 
-use App\GraphQL\Mutation\Todo\AddTodoField;
+use App\GraphQL\Mutation\User\LoginField;
+use App\GraphQL\Mutation\User\UserCreateField;
 use Youshido\GraphQL\Config\Object\ObjectTypeConfig;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 
@@ -23,7 +17,8 @@ class MutationType extends AbstractObjectType
     public function build($config)
     {
         $config->addFields([
-            new AddTodoField(),
+            new UserCreateField($config->getData()),
+            new LoginField($config->getData())
         ]);
     }
 }
