@@ -31,7 +31,7 @@ class GetUsersField extends AbstractField
   {
     CheckTokenUserHelper::checkAuthorization($this->token, $this->entityManager);
     $users = $this->entityManager->getRepository(User::class)->findBy([], ["id" => 'DESC']);
-    $userJson = $this->serializer->serialize($users, 'json', ["users"]);
+    $userJson = $this->serializer->serialize($users, 'json', ["groups" => ["users"]]);
     return json_decode($userJson);
   }
 

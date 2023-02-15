@@ -20,3 +20,5 @@
 ###< symfony/phpunit-bridge ###
 .env.test
 .env
+
+/node_modules

@@ -32,6 +32,7 @@
         "symfony/string": "6.2.*",
         "symfony/validator": "6.2.*",
         "symfony/yaml": "6.2.*",
+        "workerman/phpsocket.io": "^1.1",
         "youshido/graphql": "^1.6"
     },
     "config": {

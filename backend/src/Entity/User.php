@@ -15,19 +15,19 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["users"])]
+    #[Groups(["users", "participant"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["users"])]
+    #[Groups(["users", "participant"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["users"])]
+    #[Groups(["users", "participant"])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Groups(["users"])]
+    #[Groups(["users", "participant"])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]

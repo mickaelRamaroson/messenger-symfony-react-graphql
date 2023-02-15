@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\GraphQL\Schema;
-use App\Helpers\CheckTokenUserHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

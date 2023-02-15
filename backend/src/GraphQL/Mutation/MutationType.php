@@ -1,6 +1,7 @@
 <?php
 namespace App\GraphQL\Mutation;
 
+use App\GraphQL\Mutation\User\CreateThreadField;
 use App\GraphQL\Mutation\User\LoginField;
 use App\GraphQL\Mutation\User\UserCreateField;
 use Youshido\GraphQL\Config\Object\ObjectTypeConfig;
@@ -18,7 +19,8 @@ class MutationType extends AbstractObjectType
     {
         $config->addFields([
             new UserCreateField($config->getData()),
-            new LoginField($config->getData())
+            new LoginField($config->getData()),
+            new CreateThreadField($config->getData())
         ]);
     }
 }
