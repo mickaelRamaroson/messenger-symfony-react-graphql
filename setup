@@ -1,3 +1,4 @@
 deps_backend: composer install -d backend --ignore-platform-reqs
 deps_project: npm install
 deps_front: npm install --prefix front
+deps_mercure: npm install --prefix backend

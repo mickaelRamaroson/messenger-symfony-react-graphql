@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "startMercure.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start:dev:mercure": "nodemon startMercure.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-powershell": "^5.0.1",
+    "nodemon": "^2.0.20"
+  }
+}

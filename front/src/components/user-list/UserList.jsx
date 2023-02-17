@@ -6,6 +6,7 @@ import { createThread } from "../../store/slice/threadSlice";
 import { getUsers } from "../../store/slice/userSlice";
 
 const UserList = ({ open, onClose }) => {
+  const { currentUser } = useSelector((state) => state.auth);
   const { users, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -28,19 +29,21 @@ const UserList = ({ open, onClose }) => {
           <p className="font-semibold text-base">Chargement en cours...</p>
         )}
         <div className="min-w-[340px] overflow-y-auto max-h-[500px]">
-          {(users || []).map(({ id, lastname, email }) => (
-            <div
-              key={id}
-              className="flex items-center  cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md"
-              onClick={() => handleClickUser(id)}
-            >
-              <Avatar>{lastname.charAt(0)}</Avatar>
-              <div className="ml-4 flex flex-col">
-                <span className="text-sm">{lastname}</span>
-                <span className="text-xs text-gray-400 italic">{email}</span>
+          {(users || [])
+            .filter(({ id }) => id !== currentUser.id)
+            .map(({ id, lastname, email }) => (
+              <div
+                key={id}
+                className="flex items-center  cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md"
+                onClick={() => handleClickUser(id)}
+              >
+                <Avatar>{lastname.charAt(0)}</Avatar>
+                <div className="ml-4 flex flex-col">
+                  <span className="text-sm">{lastname}</span>
+                  <span className="text-xs text-gray-400 italic">{email}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </DialogContent>
     </Dialog>

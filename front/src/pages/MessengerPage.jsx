@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CreateNewDiscussionBtn from "../components/create-new-discussion-btn";
 import AvatarUser from "../components/user-avatar";
 import UserList from "../components/user-list";
-import { io } from "socket.io-client";
+import Discussions from "../components/discussions";
 
 const MessengerPage = () => {
   const [openUserList, setOpenUserList] = useState(false);
@@ -10,16 +10,6 @@ const MessengerPage = () => {
   const handleClickOnCreateNewDiscussion = () => {
     setOpenUserList(true);
   };
-
-  useEffect(() => {
-    const socket = io("http://localhost:4000");
-    // socket.on("connection", () => {
-    //   alert("ok");
-    // });
-    socket.on('chat message', () => {
-      alert('ok')
-    })
-  }, []);
 
   return (
     <>
@@ -34,6 +24,7 @@ const MessengerPage = () => {
               Vos discusions :
             </h2>
           </div>
+          <Discussions />
           <CreateNewDiscussionBtn
             onClick={handleClickOnCreateNewDiscussion}
             className="absolute bottom-6 right-6"

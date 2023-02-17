@@ -14,14 +14,15 @@ class Thread
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["create"])]
+    #[Groups(["create", "threads"])]
     private ?int $id = null;
 
-    #[Groups(["create"])]
+    #[Groups(["create", "threads"])]
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'threads')]
     private Collection $participants;
 
     #[ORM\OneToMany(mappedBy: 'thread', targetEntity: Message::class)]
+    #[Groups(["threads"])]
     private Collection $messages;
 
     public function __construct()

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { CREATE_THREAD } from "../../graphql/mutation/createThread";
+import { GET_MY_THEADS } from "../../graphql/query/thread";
 import axiosGraphql from "../../helpers/axiosGraphql";
 
 const initialState = {
@@ -35,5 +36,17 @@ export const createThread = createAsyncThunk(
     });
     dispatch(threadSliceActions.setCurentThead(createThread));
     return createThread;
+  }
+);
+
+export const getMyThreads = createAsyncThunk(
+  "getMyThreads",
+  async (_, { getState, dispatch }) => {
+    const userId = getState().auth.currentUser.id;
+    const { data } = await axiosGraphql({
+      query: GET_MY_THEADS,
+      variables: { userId },
+    });
+    console.log(data);
   }
 );

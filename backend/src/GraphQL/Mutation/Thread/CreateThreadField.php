@@ -2,14 +2,11 @@
 
 namespace App\GraphQL\Mutation\User;
 
-
 use App\Entity\Thread;
 use App\Entity\User;
 use App\GraphQL\Type\ThreadType;
 use App\Helpers\CheckTokenUserHelper;
-use App\Helpers\TokenHelper;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Execution\ResolveInfo;

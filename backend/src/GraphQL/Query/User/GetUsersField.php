@@ -7,7 +7,6 @@ use App\GraphQL\Type\UserType;
 use App\Helpers\CheckTokenUserHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
-use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Type\AbstractType;
@@ -17,14 +16,16 @@ use Youshido\GraphQL\Type\Object\AbstractObjectType;
 class GetUsersField extends AbstractField
 {
 
-  public EntityManagerInterface $entityManager;
-  public SerializerInterface $serializer;
-  public ?string $token;
-  public function build(FieldConfig $config)
+  private EntityManagerInterface $entityManager;
+  private SerializerInterface $serializer;
+  private ?string $token;
+
+  public function __construct(?array $config, array $data)
   {
-    $this->entityManager = $config->getData()['entityManager'];
-    $this->serializer = $config->getData()['serializer'];
-    $this->token = $config->getData()['token'];
+    parent::__construct($config ?? []);
+    $this->entityManager = $data['entityManager'];
+    $this->serializer = $data['serializer'];
+    $this->token = $data['token'];
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
