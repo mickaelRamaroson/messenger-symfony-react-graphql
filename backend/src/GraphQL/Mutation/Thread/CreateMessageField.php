@@ -2,9 +2,10 @@
 
 namespace App\GraphQL\Mutation\Thread;
 
+use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
-use App\GraphQL\Type\ThreadType;
+use App\GraphQL\Type\MessageType;
 use App\Helpers\CheckTokenUserHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -15,8 +16,9 @@ use Youshido\GraphQL\Type\AbstractType;
 use Youshido\GraphQL\Type\NonNullType;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use Youshido\GraphQL\Type\Scalar\IdType;
+use Youshido\GraphQL\Type\Scalar\StringType;
 
-class CreateThreadField extends AbstractField
+class CreateMessageField extends AbstractField
 {
   private EntityManagerInterface $entityManager;
 
@@ -26,35 +28,29 @@ class CreateThreadField extends AbstractField
   public function build(FieldConfig $config)
   {
     $this->entityManager = $config->getData()['entityManager'];
-    $this->serializer = $config->getData()['serializer'];
     $this->token = $config->getData()['token'];
+    $this->serializer = $config->getData()['serializer'];
 
     $config->addArguments([
-      'idFrom' => new NonNullType(new IdType()),
-      'idTo' => new NonNullType(new IdType()),
+      'threadId' => new NonNullType(new IdType()),
+      'fromId' => new NonNullType(new IdType()),
+      'content' => new NonNullType(new StringType())
     ]);
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
     CheckTokenUserHelper::checkAuthorization($this->token, $this->entityManager);
-    $userRepo = $this->entityManager->getRepository(User::class);
-    $thread = new Thread();
-    $thread->addParticipant($userRepo->find((int) $args['idFrom']));
-    $thread->addParticipant($userRepo->find((int) $args['idTo']));
+    $message = new Message();
+    $message->setContent($args['content']);
+    $message->setCreatedAt(new \DateTime());
+    $message->setUser($this->entityManager->getRepository(User::class)->find((int) $args['fromId']));
+    $message->setThread($this->entityManager->getRepository(Thread::class)->find((int) $args['threadId']));
 
-    $this->entityManager->persist($thread);
+    $this->entityManager->persist($message);
     $this->entityManager->flush();
 
-    $serializedThred = $this->serializer->serialize($thread, 'json', ["groups" => ["participant", "create"]]);
-
-    $theadArray = json_decode($serializedThred, true);
-
-    return [
-      'id' => $thread->getId(),
-      'participants' => $theadArray['participants'],
-      'lastMessage' => null
-    ];
+    return json_decode($this->serializer->serialize($message, 'json', ["groups" => ["message", "participant"]]), true);
   }
 
   /**
@@ -62,11 +58,11 @@ class CreateThreadField extends AbstractField
    */
   public function getType()
   {
-    return new ThreadType();
+    return new MessageType();
   }
 
   public function getName()
   {
-    return 'createThread';
+    return 'createMessage';
   }
 }

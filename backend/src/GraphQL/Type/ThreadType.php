@@ -8,6 +8,7 @@ use Youshido\GraphQL\Type\NonNullType;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use Youshido\GraphQL\Type\Scalar\IdType;
 use App\GraphQL\Type\UserType;
+use App\GraphQL\Type\MessageType;
 
 class ThreadType extends AbstractObjectType
 {
@@ -22,7 +23,8 @@ class ThreadType extends AbstractObjectType
     $config->addFields([
       'id' => new NonNullType(new IdType()),
       'participants' => new ListType(new UserType()),
-      'messages' => new ListType(new MessageType())
+      'messages' => new ListType(new MessageType()),
+      'lastMessage' => new MessageType()
     ]);
   }
 }

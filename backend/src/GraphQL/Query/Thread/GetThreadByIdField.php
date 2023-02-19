@@ -11,12 +11,11 @@ use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Type\AbstractType;
-use Youshido\GraphQL\Type\ListType\ListType;
 use Youshido\GraphQL\Type\NonNullType;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use Youshido\GraphQL\Type\Scalar\IdType;
 
-class UserTreadsField extends AbstractField
+class GetThreadByIdField extends AbstractField
 {
 
   private EntityManagerInterface $entityManager;
@@ -36,30 +35,27 @@ class UserTreadsField extends AbstractField
   public function build(FieldConfig $config)
   {
     $config->addArguments([
-      'userId' => new NonNullType(new IdType()),
+      'id' => new NonNullType(new IdType()),
     ]);
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
     CheckTokenUserHelper::checkAuthorization($this->token, $this->entityManager);
-    $threads = $this->entityManager->getRepository(Thread::class)->getThreadsByUserId($args['userId']);
-    $serializedTreads = $this->serializer->serialize($threads, 'json', ["groups" => ["threads", "message", "participant"]]);
-    $data = array_map(function ($el) {
-      return [...$el, "lastMessage" => count($el['messages']) >= 1 ? $el['messages'][count($el['messages']) - 1] : null];
-    }, json_decode($serializedTreads, true));
-    return $data;
+    $thread = $this->entityManager->getRepository(Thread::class)->find((int) $args['id']);
+    return json_decode($this->serializer->serialize($thread, 'json', ["groups" => ["threads", "message", "participant"]]), true);
   }
+
   /**
    * @return AbstractObjectType|AbstractType
    */
   public function getType()
   {
-    return new ListType(new ThreadType());
+    return new ThreadType();
   }
 
   public function getName()
   {
-    return 'userThreads';
+    return 'thread';
   }
 }

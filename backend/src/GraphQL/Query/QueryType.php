@@ -2,6 +2,8 @@
 
 namespace App\GraphQL\Query;
 
+use App\GraphQL\Query\Thread\GetLastMessageThreadField;
+use App\GraphQL\Query\Thread\GetThreadByIdField;
 use App\GraphQL\Query\Thread\UserTreadsField;
 use App\GraphQL\Query\User\GetUsersField;
 use Youshido\GraphQL\Config\Object\ObjectTypeConfig;
@@ -18,7 +20,9 @@ class QueryType extends AbstractObjectType
     {
         $config->addFields([
             new GetUsersField(null, $config->getData()),
-            new UserTreadsField(null, $config->getData())
+            new UserTreadsField(null, $config->getData()),
+            new GetThreadByIdField(null, $config->getData()),
+            new GetLastMessageThreadField(null, $config->getData())
         ]);
     }
 }

@@ -9,6 +9,7 @@ use Youshido\GraphQL\Type\Scalar\IdType;
 use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Type\Scalar\BooleanType;
 use Youshido\GraphQL\Type\Scalar\DateTimeType;
+use App\GraphQL\Type\UserType;
 
 class MessageType extends AbstractObjectType
 {
@@ -25,8 +26,8 @@ class MessageType extends AbstractObjectType
       'user' => new UserType(),
       'content' => new StringType(),
       'isRead' => new BooleanType(),
-      'readAt' => new DateTimeType(),
-      'createdAt' => new DateTimeType(),
+      'readAt' => new StringType(),
+      'createdAt' => new StringType(),
     ]);
   }
 }

@@ -106,15 +106,6 @@ class Message
         return $this;
     }
 
-
-    #[ORM\PrePersist]
-    public function setCreatedAtAutomatically()
-    {
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt(new \DateTime());
-        }
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;

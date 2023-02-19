@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { combinedReducer } from "./reducers";
 import { persistStore } from "redux-persist";

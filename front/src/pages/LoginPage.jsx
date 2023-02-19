@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authActions, login } from "../store/slice/authSlice";
+import { Link } from "react-router-dom";
 
 const Loginpage = () => {
   const { loading, error } = useSelector((state) => state.auth);
@@ -66,6 +67,12 @@ const Loginpage = () => {
               login
             </Button>
           </div>
+          <Link
+            to="/registration"
+            className="text-blue-500 hover:text-blue-600 cursor-pointer"
+          >
+            Créer un nouveau compte
+          </Link>
         </form>
       </div>
     </div>

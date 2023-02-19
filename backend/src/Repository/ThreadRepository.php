@@ -48,6 +48,19 @@ class ThreadRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    public function getLastThreadsByUserId(int $userId)
+    {
+        return $this->createQueryBuilder('t')
+            ->leftJoin("t.participants", "p")
+            ->where('p.id = :user_id')
+            ->setParameter('user_id', $userId)
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getResult();
+    }
+
+
 
 //    /**
 //     * @return Thread[] Returns an array of Thread objects

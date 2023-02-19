@@ -22,6 +22,7 @@ class Thread
     private Collection $participants;
 
     #[ORM\OneToMany(mappedBy: 'thread', targetEntity: Message::class)]
+    #[ORM\OrderBy(["createdAt" => "ASC"])]
     #[Groups(["threads"])]
     private Collection $messages;
 
