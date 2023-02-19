@@ -52,8 +52,8 @@ export const GET_LAST_MESSAGE_THREAD = `
 `;
 
 export const GET_LAST_USER_THREAD = `
-query lastThreadByUserId($userId ID!) {
-  lastThreadByUserId(userId: $userId) {
+query lastThreadUser($userId ID!) {
+  lastThreadUser(userId: $userId) {
     id
     participants {
       id

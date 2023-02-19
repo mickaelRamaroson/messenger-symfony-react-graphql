@@ -186,13 +186,13 @@ export const getLastThreadUser = createAsyncThunk(
     } = getState().auth;
     const { threads } = getState().thread;
     const {
-      data: { lastThreadByUserId },
+      data: { lastThreadUser },
     } = await axiosGraphql({
       query: GET_LAST_USER_THREAD,
       variables: { userId },
     });
-    dispatch(threadSliceActions.setThreads([lastThreadByUserId, ...threads]));
-    return lastThreadByUserId;
+    dispatch(threadSliceActions.setThreads([lastThreadUser, ...threads]));
+    return lastThreadUser;
   }
 );
 
