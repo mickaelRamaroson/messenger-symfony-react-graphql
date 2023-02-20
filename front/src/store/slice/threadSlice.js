@@ -173,6 +173,11 @@ export const getLastMessageThread = createAsyncThunk(
           messages: [...currentThread.messages, lastMessageThread],
         })
       );
+      // set Read message
+      axiosGraphql({
+        query: SET_READ_MESSAGES,
+        variables: { messageIds: [lastMessageThread.id] },
+      });
     }
     return lastMessageThread;
   }

@@ -5,6 +5,8 @@ namespace App\GraphQL\Mutation\Thread;
 use App\Entity\Message;
 use App\Helpers\CheckTokenUserHelper;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mercure\Update;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Field\AbstractField;
@@ -17,12 +19,15 @@ use Youshido\GraphQL\Type\Scalar\IdType;
 class SetReadMessagesField extends AbstractField
 {
   private EntityManagerInterface $entityManager;
+
+  private MessageBusInterface $bus;
   private ?string $token;
 
   public function build(FieldConfig $config)
   {
     $this->entityManager = $config->getData()['entityManager'];
     $this->token = $config->getData()['token'];
+    $this->bus = $config->getData()['bus'];
 
     $config->addArguments([
       'messageIds' => new ListType(new IdType()),
@@ -40,6 +45,9 @@ class SetReadMessagesField extends AbstractField
           $message->setReadAt(new \DateTime());
           $this->entityManager->persist($message);
           $this->entityManager->flush();
+
+          $update = new Update("http://monsite.com/message/{$message->getId()}", "[]");
+          $this->bus->dispatch($update);
         }
       }
     } catch (\Exception $e) {

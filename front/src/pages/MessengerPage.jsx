@@ -4,12 +4,21 @@ import AvatarUser from "../components/user-avatar";
 import UserList from "../components/user-list";
 import Discussions from "../components/discussions";
 import Messages from "../components/messages";
+import { IconButton } from "@mui/material";
+import { PowerSettingsNew } from "@mui/icons-material";
 
 const MessengerPage = () => {
   const [openUserList, setOpenUserList] = useState(false);
 
   const handleClickOnCreateNewDiscussion = () => {
     setOpenUserList(true);
+  };
+
+  const handleClickLogout = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      window.location.assign("/login");
+    }, 1000);
   };
 
   return (
@@ -22,8 +31,11 @@ const MessengerPage = () => {
             className="absolute bottom-6 right-6"
           />
           <div className="bg-gray-800 w-full ">
-            <div className="p-4 bg-gray-700">
+            <div className="p-4 bg-gray-700 w-full flex items-center justify-between">
               <AvatarUser />
+              <IconButton onClick={handleClickLogout}>
+                <PowerSettingsNew color="error" />
+              </IconButton>
             </div>
             <h2 className="font-poppins font-semibold text-xl p-4">
               Vos discusions :

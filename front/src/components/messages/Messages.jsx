@@ -2,7 +2,10 @@
 import { Avatar } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLastMessageThread } from "../../store/slice/threadSlice";
+import {
+  getLastMessageThread,
+  setReadMessages,
+} from "../../store/slice/threadSlice";
 import MessageInput from "../message-input";
 import MessageItem from "../message-item";
 
@@ -37,13 +40,21 @@ const Messages = () => {
 
   useEffect(() => {
     if (currentThread?.messages?.length && currentInterlocutor) {
+      const interlocutorMessageIdsNotRead = currentThread.messages.filter(
+        (item) => !item.isRead && item.user.id === currentInterlocutor.id
+      );
+      if (interlocutorMessageIdsNotRead.length) {
+        dispatch(
+          setReadMessages(interlocutorMessageIdsNotRead.map((item) => item.id))
+        );
+      }
     }
     scrollBottom();
     window.addEventListener("resize", scrollBottom);
     return () => {
       window.removeEventListener("resize", scrollBottom);
     };
-  }, [currentThread, currentInterlocutor]);
+  }, [currentThread]);
 
   return (
     <>
