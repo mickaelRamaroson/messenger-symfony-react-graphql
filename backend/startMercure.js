@@ -8,7 +8,7 @@ if (opsys == "darwin") {
     `JWT_KEY='${process.env.MERCURE_JWT_KEY}' ADDR='${process.env.MECURE_ADDR}' CORS_ALLOWED_ORIGINS='*' ALLOW_ANONYMOUS=1 ./mercure/mercure_darwin`
   );
 } else if (opsys == "win32" || opsys == "win64") {
-  PowerShell.$`$env:JWT_KEY='${process.env.MERCURE_JWT_KEY}' $env:ADDR='${process.env.MECURE_ADDR}' $env:CORS_ALLOWED_ORIGINS='*' $env:ALLOW_ANONYMOUS=1 ./mercure/mercure_window.exe`;
+  PowerShell.$`.\\mercure\\mercure_windows.exe --addr '${process.env.MECURE_ADDR}' --jwt-key '${process.env.MERCURE_JWT_KEY}'  --allow-anonymous 1 --cors-allowed-origins '*'`;
 } else if (opsys == "linux") {
   exec(
     `JWT_KEY='${process.env.MERCURE_JWT_KEY}' ADDR='${process.env.MECURE_ADDR}' CORS_ALLOWED_ORIGINS='*' ALLOW_ANONYMOUS=1 ./mercure/mercure_linux`
@@ -16,3 +16,4 @@ if (opsys == "darwin") {
 }
 
 console.log("MERCURE is running on port 4000");
+
