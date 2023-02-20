@@ -25,3 +25,7 @@
 Tapez la commande suivant à la racine du projet
 
 ## `npm run dev`
+
+- l'API graphql tourne sur http://localhost:8080
+- Le front tourne sur http://localhost:3000
+- le server mercure tourne sur http://localhost:4000
